@@ -1,0 +1,21 @@
+name: "ipdln_hackathon"
+output_dir: "docs"
+navbar:
+  title: "Hackathon IPDLN 2018"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "License"
+      href: license.html
+  right:
+    - icon: fa-github
+      href: https://github.com/jdblischak/workflowr
+    - icon: fa-twitter
+      href: https://twitter.com/_davidhen
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+    theme: spacelab
+    code_folding: hide
+    df_print: paged
