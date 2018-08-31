@@ -8,6 +8,6 @@ output:
 
 Code and materials for the Hackathon held in Banff, Canada at IPDLN 2018
 
-* [Data Cleaning](docs/01_data-cleaning.html)
+* [Data Cleaning](01_data-cleaning.html)
 * Next file
 
