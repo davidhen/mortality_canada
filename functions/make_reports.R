@@ -13,7 +13,7 @@
 #' @md
 #'
 report <- function(rmd, n_file, open_file = TRUE,
-                   report_dir = here("reports"), rmds_dir = here("rmds")) {
+                   report_dir = here("docs"), rmds_dir = here("rmds")) {
 
   if(!require(rmarkdown)) stop("Install rmarkdown package")
 

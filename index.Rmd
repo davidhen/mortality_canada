@@ -2,8 +2,8 @@
 title: "Home"
 site: workflowr::wflow_site
 output:
-  workflowr::wflow_html:
-    toc: false
+  html_document:
+      toc: false
 ---
 
 Code and materials for the Hackathon held in Banff, Canada at IPDLN 2018

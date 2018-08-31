@@ -15,16 +15,13 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -168,14 +165,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 
 
@@ -203,7 +192,7 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/jdblischak/workflowr">
+  <a href="https://github.com/davidhen/mortality_canada">
     <span class="fa fa-github"></span>
      
   </a>
@@ -219,22 +208,7 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
-
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -243,132 +217,12 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-08-31</p>
-<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
-<ul>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/davidhen/mortality_canada/tree/7a05f32fca72fcc0374d0bcfe2d9db4b5a3fbc58" target="_blank">7a05f32</a> </summary></p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
-<pre><code>
-Ignored files:
-    Ignored:    .Rhistory
-    Ignored:    .Rproj.user/
-    Ignored:    assets/clean_data/
-    Ignored:    raw_data/
-
-</code></pre>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
-</li>
-</ul>
-<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-File
-</th>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-<th style="text-align:left;">
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/davidhen/mortality_canada/blob/7a05f32fca72fcc0374d0bcfe2d9db4b5a3fbc58/index.Rmd" target="_blank">7a05f32</a>
-</td>
-<td style="text-align:left;">
-davidhen
-</td>
-<td style="text-align:left;">
-2018-08-31
-</td>
-<td style="text-align:left;">
-change data cleaning link filepath
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/davidhen/mortality_canada/ed17aae2fcb26f7fb88c8f64cbfc59c512a34e46/docs/index.html" target="_blank">ed17aae</a>
-</td>
-<td style="text-align:left;">
-davidhen
-</td>
-<td style="text-align:left;">
-2018-08-31
-</td>
-<td style="text-align:left;">
-inital commit
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/davidhen/mortality_canada/blob/ed17aae2fcb26f7fb88c8f64cbfc59c512a34e46/index.Rmd" target="_blank">ed17aae</a>
-</td>
-<td style="text-align:left;">
-davidhen
-</td>
-<td style="text-align:left;">
-2018-08-31
-</td>
-<td style="text-align:left;">
-inital commit
-</td>
-</tr>
-</tbody>
-</table>
-</ul>
-<p></details></p>
-<hr />
 <p>Code and materials for the Hackathon held in Banff, Canada at IPDLN 2018</p>
 <ul>
 <li><a href="01_data-cleaning.html">Data Cleaning</a></li>
 <li>Next file</li>
 </ul>
 
-<!-- Adjust MathJax settings so that all math formulae are shown using
-TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
-the presentation more consistent at the cost of the webpage sometimes
-taking slightly longer to load. Note that this only works because the
-footer is added to webpages before the MathJax javascript. -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    "HTML-CSS": { availableFonts: ["TeX"] }
-  });
-</script>
-
-<hr>
-<p>
-  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-  analysis was created with
-  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
-</p>
-<hr>
 
 
 
