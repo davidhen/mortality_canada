@@ -9,5 +9,8 @@ output:
 Code and materials for the Hackathon held in Banff, Canada at IPDLN 2018
 
 * [Data Cleaning](01_data-cleaning.html)
-* Next file
+* [Sumeet initial thoughts](02_SAS_PROC_FREQ.html)
 
+
+
+**add partials for footer and session info** see https://rmarkdown.rstudio.com/rmarkdown_websites.htm#rmd_partials
