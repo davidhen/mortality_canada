@@ -60,12 +60,42 @@ age_dead %>%
   filter(dead == "Dead") %>% 
   ggplot(aes(age_grp, frq)) +
   geom_col(fill = "#4477AA") +
+  coord_flip() +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Age group",
        x = "",
        y = "")
 ```
+
+##Age at immigration
+
+```{r label, options}
+clean_data %>% 
+  count(age_imm, dead) %>% 
+  group_by(age_imm) %>% 
+  mutate(frq = round(n/sum(n),4),
+         pct = frq*100)  -> ageimm_dead
+datatable(age_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+plot
+
+```{r plot-ageimm, fig.width=9}
+ageimm_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(age_imm, frq)) +
+  geom_col(fill = "#4477AA") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.5)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by Age group at immigration",
+       x = "",
+       y = "")
+```
+
 
 ##Sex
 
@@ -179,6 +209,104 @@ ab_dead %>%
        subtitle = "by Aboriginal identity",
        x = "",
        y = "")
+```
+
+
+## Province of residence
+
+```{r label, options}
+clean_data %>% 
+  count(province, dead) %>% 
+  group_by(province) %>% 
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> prov_dead
+datatable(prov_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+plot it
+
+```{r plot-prov, fig.width=9}
+prov_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(province, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.1),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  coord_flip() +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by Province of residence",
+       x = "",
+       y = "")
+```
+
+##Activities of daily living
+
+```{r adl-dead}
+clean_data %>% 
+  count(adl_difficulty, dead) %>% 
+  group_by(adl_difficulty) %>% 
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> adl_dead
+adl_dead
+datatable(prov_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+```{r plot-adl, fig.width=9}
+adl_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(adl_difficulty, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.35),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by stated difficulty with Activities of Daily Living",
+       x = "",
+       y = "")
+```
+
+##Country of birth
+
+```{r birth}
+clean_data %>% 
+  count(birth_country, age_grp, dead) %>% 
+  group_by(birth_country, age_grp) %>% 
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> birth_dead
+birth_dead
+datatable(prov_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+```{r birth}
+birth_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(age_grp, frq, fill = birth_country)) +
+  geom_col() +
+  scale_fill_ptol() +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.35),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by stated difficulty with Activities of Daily Living",
+       x = "",
+       y = "")
+```
+
+
+
+
+
+
+```{r ggally, fig.width=12, fig.height=12}
+library(GGally)
+clean_data %>% 
+  select(age_grp, age_imm, sex, loinc_decile, education, ab_id_detailed,
+         province, adl_difficulty) %>% 
+  ggpairs(., mapping = aes(color = "dead"))
 ```
 
 
