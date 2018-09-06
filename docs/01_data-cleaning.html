@@ -254,8 +254,9 @@ div.tocify {
 <p>Load packages required…</p>
 <pre class="r"><code>library(tidyverse)
 library(magrittr) #Pipe operators
-library(sf)    #maps and shapefile reading
-theme_set(theme_minimal(base_size = 16))</code></pre>
+library(sf)    #maps and shapefile reading</code></pre>
+<pre><code>## Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3</code></pre>
+<pre class="r"><code>theme_set(theme_minimal(base_size = 16))</code></pre>
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
@@ -269,23 +270,7 @@ theme_set(theme_minimal(base_size = 16))</code></pre>
 ##   .default = col_integer()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>shapefile &lt;- read_sf(here(&quot;raw_data/canada_province_shapefile/gpr_000b11a_e.shp&quot;))
-population &lt;- read_csv(here(&quot;raw_data/1710000901-eng.csv&quot;), skip = 5)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   Geography = col_character(),
-##   `Q2 2017` = col_character(),
-##   `Q3 2017` = col_number(),
-##   `Q4 2017` = col_number(),
-##   `Q1 2018` = col_number(),
-##   `Q2 2018` = col_number()
-## )</code></pre>
-<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
-## a multiple of vector length (arg 1)</code></pre>
-<pre><code>## Warning: 8 parsing failures.
-## row # A tibble: 5 x 5 col     row col   expected  actual   file                                      expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;                                     actual 1    16 &lt;NA&gt;  6 columns 1 colum~ 'C:/GitHub/mortality_canada/raw_data/171~ file 2    17 &lt;NA&gt;  6 columns 2 colum~ 'C:/GitHub/mortality_canada/raw_data/171~ row 3    18 &lt;NA&gt;  6 columns 2 colum~ 'C:/GitHub/mortality_canada/raw_data/171~ col 4    19 &lt;NA&gt;  6 columns 2 colum~ 'C:/GitHub/mortality_canada/raw_data/171~ expected 5    20 &lt;NA&gt;  6 columns 2 colum~ 'C:/GitHub/mortality_canada/raw_data/171~
-## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
-## See problems(...) for more details.</code></pre>
+<pre class="r"><code>shapefile &lt;- read_sf(here(&quot;raw_data/canada_province_shapefile/gpr_000b11a_e.shp&quot;))</code></pre>
 </div>
 </div>
 <div id="clean-data" class="section level2">
@@ -648,10 +633,6 @@ rm(clean_data)</code></pre>
 <h3>Save it</h3>
 <pre class="r"><code>save(shapefile, file = here(&quot;assets/clean_data/shapefile.rds&quot;))</code></pre>
 </div>
-</div>
-<div id="population" class="section level2">
-<h2>Population</h2>
-<p>May or may not do this - think the data is a survey sample so won’t be able to calculate rates.</p>
 </div>
 
 

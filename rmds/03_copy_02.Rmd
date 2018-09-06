@@ -23,10 +23,12 @@ Load required packages
 
 ```{r libs}
 library(tidyverse)
+library(magrittr)
 library(here)
 library(DT)
 library(ggthemes)
 library(extrafont)
+library(classInt)
 theme_set(theme_minimal(base_size = 16, base_family = "Roboto"))
 ```
 
@@ -36,6 +38,7 @@ Load the cleaned data file
 
 ```{r load}
 load(here("assets/clean_data/clean_data.rds"))
+load(here("assets/clean_data/shapefile.rds"))
 ```
 
 
@@ -214,12 +217,13 @@ ab_dead %>%
 
 ## Province of residence
 
-```{r label, options}
+```{r prov, options}
 clean_data %>% 
   count(province, dead) %>% 
   group_by(province) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> prov_dead
+prov_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -240,6 +244,34 @@ prov_dead %>%
        x = "",
        y = "")
 ```
+
+and a map
+
+```{r map_prov, fig.width=9, fig.height=6}
+prov_dead %<>%
+  filter(dead == "Dead") 
+
+classes <- classIntervals(prov_dead$pct, n = 5, style = "equal")
+
+prov_dead %<>%
+  mutate(pct_class = cut(pct, classes$brks, include.lowest = TRUE))
+
+prov_dead %>% 
+  left_join(., shapefile) %>% 
+  ggplot(.) +
+  geom_sf(aes(fill = pct_class),
+          colour = "black",
+          size = 0.3) +
+  scale_fill_brewer(palette = "Blues", 
+                    name = "Mortality rate %") +
+  theme(line = element_blank(),
+        axis.text = element_blank(),
+        panel.grid = element_line(colour = "transparent"),
+        legend.position = "bottom") +
+  labs(title = "Mortality rate (%)",
+       subtitle = "by Province")
+```
+
 
 ##Activities of daily living
 
@@ -281,33 +313,26 @@ datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
-```{r birth}
+```{r birth_2, fig.width=14, fig.height=10}
 birth_dead %>% 
   filter(dead == "Dead") %>% 
-  ggplot(aes(age_grp, frq, fill = birth_country)) +
+  ggplot(aes(birth_country, frq, fill = birth_country)) +
   geom_col() +
   scale_fill_ptol() +
+  facet_wrap(~ age_grp) +
   scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.35),
-                     breaks = scales::pretty_breaks(n = 9)) +
+                     breaks = scales::pretty_breaks()) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by stated difficulty with Activities of Daily Living",
        x = "",
-       y = "")
+       y = "") +
+  theme(legend.position = "bottom", 
+        axis.text.x = element_blank())
 ```
 
 
 
 
-
-
-```{r ggally, fig.width=12, fig.height=12}
-library(GGally)
-clean_data %>% 
-  select(age_grp, age_imm, sex, loinc_decile, education, ab_id_detailed,
-         province, adl_difficulty) %>% 
-  ggpairs(., mapping = aes(color = "dead"))
-```
 
 
 

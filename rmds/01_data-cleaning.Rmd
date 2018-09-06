@@ -34,7 +34,6 @@ I've also downloaded a shapefile of Canadian provinces from [this link](https://
 ```{r load_data}
 raw_data <- read_csv(here("raw_data/ipdln_synth_final.csv"))
 shapefile <- read_sf(here("raw_data/canada_province_shapefile/gpr_000b11a_e.shp"))
-population <- read_csv(here("raw_data/1710000901-eng.csv"), skip = 5)
 ```
 
 
@@ -383,8 +382,6 @@ shapefile %>%
 save(shapefile, file = here("assets/clean_data/shapefile.rds"))
 ```
 
-##Population
 
-May or may not do this - think the data is a survey sample so won't be able to calculate rates.
 
 
