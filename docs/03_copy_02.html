@@ -254,6 +254,7 @@ library(here)</code></pre>
   
   stopifnot(is.factor(x))
   
+  
   fct_count(x) %&gt;% 
     mutate(Percent = n/sum(n)*100,
          `Cumulative Frequency` = cumsum(n),
