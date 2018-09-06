@@ -223,7 +223,6 @@ clean_data %>%
   group_by(province) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> prov_dead
-prov_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -281,7 +280,6 @@ clean_data %>%
   group_by(adl_difficulty) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> adl_dead
-adl_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -308,7 +306,6 @@ clean_data %>%
   group_by(birth_country, age_grp) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> birth_dead
-birth_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -323,9 +320,10 @@ birth_dead %>%
   scale_y_continuous(labels = scales::percent_format(),
                      breaks = scales::pretty_breaks()) +
   labs(title = "Percentage of indivudals who died",
-       subtitle = "by stated difficulty with Activities of Daily Living",
+       subtitle = "by age group and country of birth",
        x = "",
-       y = "") +
+       y = "", 
+       fill = "Country of\nbirth") +
   theme(legend.position = "bottom", 
         axis.text.x = element_blank())
 ```
