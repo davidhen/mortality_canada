@@ -47,7 +47,7 @@ load(here("assets/clean_data/clean_data.rds"))
 clean_data %>% 
   count(age_grp, dead) %>% 
   group_by(age_grp) %>% 
-  mutate(frq = n/sum(n),
+  mutate(frq = round(n/sum(n),4),
          pct = frq*100)  -> age_dead
 datatable(age_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
@@ -69,24 +69,114 @@ age_dead %>%
 
 ##Sex
 
+```{r sex-dead}
+clean_data %>% 
+  count(sex, dead) %>% 
+  group_by(sex) %>% 
+  mutate(frq = round(n/sum(n),4),
+         pct = frq*100)  -> sex_dead
+datatable(sex_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+plot it
+
+```{r plot_sex, fig.width=9}
+sex_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(sex, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.1),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by Sex",
+       x = "",
+       y = "")
+```
+
+##Income decile
+
 
 ```{r count}
 clean_data %>% 
   count(loinc_decile, dead) %>% 
   group_by(loinc_decile) %>% 
-  mutate(frq = n/sum(n),
-         pct= frq*100) %>% 
-  rename(`Income Decile` = loinc_decile,
-         `Mortality Status` = dead) -> inc_dead
-inc_dead
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> inc_dead
+datatable(inc_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+```{r plot_inc, fig.width=9}
+inc_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(loinc_decile, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.16),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by income decile",
+       x = "",
+       y = "")
+```
+
+##Education
+
+```{r edu-dead}
+clean_data %>% 
+  count(education, dead) %>% 
+  group_by(education) %>% 
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> edu_dead
+datatable(inc_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
+```
+
+plot it
+
+```{r plot-edu, fig.width = 9}
+edu_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(education, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.18),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  coord_flip() +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by highest level of education obtained",
+       x = "",
+       y = "")
+```
+
+##Aboriginal identity
+
+```{r abor-count}
+clean_data %>% 
+  count(ab_id_detailed, dead) %>% 
+  group_by(ab_id_detailed) %>% 
+  mutate(frq = round(n/sum(n), 4),
+         pct= frq*100)  -> ab_dead
+datatable(inc_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
 ```
 
 
+plot it
 
-
-
-
-
-
-
-
+```{r ad-dead, fig.width=9}
+ab_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(ab_id_detailed, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format(),
+                     limits = c(0, 0.12),
+                     breaks = scales::pretty_breaks(n = 9)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by Aboriginal identity",
+       x = "",
+       y = "")
+```
