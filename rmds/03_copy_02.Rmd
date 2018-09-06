@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Exploratory analysis"
 author: "David Henderson"
 date: "6 September 2018"
 output:
@@ -13,33 +13,74 @@ knitr::opts_chunk$set(echo = TRUE)
 options(digits = 3)
 ```
 
-## R Markdown
+# Intro
+
+Building on Sumeet's intitial thoughts I want to get a quick look of the socioeonomic variables that might predict mortality.
+
+##Packages
+
+Load required packages
 
 ```{r libs}
 library(tidyverse)
 library(here)
+library(DT)
+library(ggthemes)
+library(extrafont)
+theme_set(theme_minimal(base_size = 16, base_family = "Roboto"))
 ```
 
+##Data
+
+Load the cleaned data file
 
 ```{r load}
 load(here("assets/clean_data/clean_data.rds"))
 ```
 
 
-```{r count}
-count_sum <- function(x){
-  
-  stopifnot(is.factor(x))
-  
-  
-  fct_count(x) %>% 
-    mutate(Percent = n/sum(n)*100,
-         `Cumulative Frequency` = cumsum(n),
-         `Cumulative Percent` = cumsum(Percent))
-}
+#Mortality by predictor
 
-map(clean_data, count_sum)
+##Age group
+
+```{r age_dead}
+clean_data %>% 
+  count(age_grp, dead) %>% 
+  group_by(age_grp) %>% 
+  mutate(frq = n/sum(n),
+         pct = frq*100)  -> age_dead
+datatable(age_dead, extensions = "Buttons", options = list(
+  dom = "Bfrtip"))
 ```
+
+plot it
+
+```{r plot_age, fig.width=9}
+age_dead %>% 
+  filter(dead == "Dead") %>% 
+  ggplot(aes(age_grp, frq)) +
+  geom_col(fill = "#4477AA") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Percentage of indivudals who died",
+       subtitle = "by Age group",
+       x = "",
+       y = "")
+```
+
+##Sex
+
+
+```{r count}
+clean_data %>% 
+  count(loinc_decile, dead) %>% 
+  group_by(loinc_decile) %>% 
+  mutate(frq = n/sum(n),
+         pct= frq*100) %>% 
+  rename(`Income Decile` = loinc_decile,
+         `Mortality Status` = dead) -> inc_dead
+inc_dead
+```
+
 
 
 

@@ -143,6 +143,7 @@ $(document).ready(function () {
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(here)</code></pre>
 <pre><code>## here() starts at C:/GitHub/mortality_canada</code></pre>
+<pre class="r"><code>library(knitr)</code></pre>
 <pre class="r"><code>load(here(&quot;assets/clean_data/clean_data.rds&quot;))</code></pre>
 <pre class="r"><code>count_sum &lt;- function(x){
   
@@ -155,407 +156,2140 @@ $(document).ready(function () {
          `Cumulative Percent` = cumsum(Percent))
 }
 
-map(clean_data, count_sum)</code></pre>
-<pre><code>## $ab_id_dichot
-## # A tibble: 2 x 5
-##   f                     n Percent `Cumulative Frequen~ `Cumulative Percen~
-##   &lt;fct&gt;             &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;               &lt;dbl&gt;
-## 1 Aboriginal ID    245694    5.65               245694                5.65
-## 2 Non-Aboriginal~ 4100955   94.3               4346649              100   
-## 
-## $ab_id_detailed
-## # A tibble: 6 x 5
-##   f                      n Percent `Cumulative Frequen~ `Cumulative Perce~
-##   &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;              &lt;dbl&gt;
-## 1 North_Am_Indian   167424  3.85                 167424               3.85
-## 2 Mètis              54164  1.25                 221588               5.10
-## 3 Inuit              18804  0.433                240392               5.53
-## 4 Multiple Aborgi~     881  0.0203               241273               5.55
-## 5 Other Aboriginal    4421  0.102                245694               5.65
-## 6 Non-Aboriginal   4100955 94.3                 4346649             100   
-## 
-## $adl_difficulty
-## # A tibble: 4 x 5
-##   f                n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 No         3610703   83.1                 3610703                 83.1
-## 2 Not stated   54059    1.24                3664762                 84.3
-## 3 Often       282002    6.49                3946764                 90.8
-## 4 Sometimes   399885    9.20                4346649                100  
-## 
-## $citizen_stat
-## # A tibble: 2 x 5
-##   f                  n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;          &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Canadian     4119958   94.8                 4119958                 94.8
-## 2 non-Canadian  226691    5.22                4346649                100  
-## 
-## $worker_class
-## # A tibble: 7 x 5
-##   f                       n Percent `Cumulative Freque~ `Cumulative Perce~
-##   &lt;fct&gt;               &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-## 1 Unpaid family wo~    9209   0.212                9209              0.212
-## 2 Paid worker,no h~   60121   1.38                69330              1.60 
-## 3 Paid worker,paid~   81310   1.87               150640              3.47 
-## 4 Paid Worker       2748532  63.2               2899172             66.7  
-## 5 Self-employed,no~  179326   4.13              3078498             70.8  
-## 6 Self-employed,pa~   72154   1.66              3150652             72.5  
-## 7 &quot;Not applicable &quot; 1195997  27.5               4346649            100    
-## 
-## $adl_disab_difficulty
-## # A tibble: 4 x 5
-##   f                n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 No         3359763   77.3                 3359763                 77.3
-## 2 Not stated   45969    1.06                3405732                 78.4
-## 3 Often       423068    9.73                3828800                 88.1
-## 4 Sometimes   517849   11.9                 4346649                100. 
-## 
-## $adl_disab_diff_type
-## # A tibble: 17 x 5
-##    f                        n Percent `Cumulative Frequ~ `Cumulative Perc~
-##    &lt;fct&gt;                &lt;int&gt;   &lt;dbl&gt;              &lt;int&gt;             &lt;dbl&gt;
-##  1 ADL &amp; Home &amp; other  288726   6.64              288726              6.64
-##  2 ADL &amp; Home &amp; Work~   17434   0.401             306160              7.04
-##  3 ADL &amp; Home &amp; Work~  148517   3.42              454677             10.5 
-##  4 ADL &amp; Work &amp; other    8205   0.189             462882             10.6 
-##  5 ADL &amp; Home           66522   1.53              529404             12.2 
-##  6 ADL &amp; other          23564   0.542             552968             12.7 
-##  7 ADL &amp; Work/school     8188   0.188             561156             12.9 
-##  8 ADL                 120731   2.78              681887             15.7 
-##  9 None               3359763  77.3              4041650             93.0 
-## 10 Home &amp; other         47982   1.10             4089632             94.1 
-## 11 Home &amp; Work/school   14612   0.336            4104244             94.4 
-## 12 Home &amp; Work/schoo~   54428   1.25             4158672             95.7 
-## 13 Work/school &amp; oth~   30750   0.707            4189422             96.4 
-## 14 Home                 34692   0.798            4224114             97.2 
-## 15 Other                36578   0.842            4260692             98.0 
-## 16 Work/school          39988   0.920            4300680             98.9 
-## 17 Not stated           45969   1.06             4346649            100.  
-## 
-## $vis_minority
-## # A tibble: 14 x 5
-##    f                      n Percent `Cumulative Freque~ `Cumulative Perce~
-##    &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-##  1 Chinese           141501   3.26               141501               3.26
-##  2 South Asian       106406   2.45               247907               5.70
-##  3 Black              79628   1.83               327535               7.54
-##  4 Filipino           46079   1.06               373614               8.60
-##  5 Latin American     36556   0.841              410170               9.44
-##  6 Southeast Asian    24144   0.555              434314               9.99
-##  7 Arab               27776   0.639              462090              10.6 
-##  8 West Asian         16355   0.376              478445              11.0 
-##  9 Korean             13813   0.318              492258              11.3 
-## 10 Japanese           10427   0.240              502685              11.6 
-## 11 Other visible m~    8341   0.192              511026              11.8 
-## 12 Multiple visibl~   12218   0.281              523244              12.0 
-## 13 Aboriginal self~  241183   5.55               764427              17.6 
-## 14 Not a visible m~ 3582222  82.4               4346649             100.  
-## 
-## $first_lang
-## # A tibble: 4 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 English        3209323  73.8                 3209323                73.8
-## 2 French         1032652  23.8                 4241975                97.6
-## 3 English &amp; Fre~   40041   0.921               4282016                98.5
-## 4 Other            64633   1.49                4346649               100  
-## 
-## $employ_status
-## # A tibble: 3 x 5
-##   f                 n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;         &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Full-time   2512562    57.8                2512562                 57.8
-## 2 Part-time    562099    12.9                3074661                 70.7
-## 3 Didn't work 1271988    29.3                4346649                100  
-## 
-## $generation
-## # A tibble: 3 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 1st Generation  967248    22.3                967248                22.3
-## 2 2nd Generation  667811    15.4               1635059                37.6
-## 3 3rd Generation 2711590    62.4               4346649               100  
-## 
-## $education
-## # A tibble: 13 x 5
-##    f                       n Percent `Cumulative Freque~ `Cumulative Perc~
-##    &lt;fct&gt;               &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;             &lt;dbl&gt;
-##  1 None               902326  20.8                902326              20.8
-##  2 High School       1070588  24.6               1972914              45.4
-##  3 Trades Cert/Dip    333219   7.67              2306133              53.1
-##  4 Apprenticeship C~  183540   4.22              2489673              57.3
-##  5 Non-Uni Cert/Dip~  109752   2.52              2599425              59.8
-##  6 Non-Uni Cert/Dip~  390160   8.98              2989585              68.8
-##  7 Non-Uni Cert/Dip~  316334   7.28              3305919              76.1
-##  8 Uni Cert/Dip bel~  202175   4.65              3508094              80.7
-##  9 Bachelor's degree  537064  12.4               4045158              93.1
-## 10 Uni Cert/Dip abo~   89350   2.06              4134508              95.1
-## 11 Medicine etc.       23858   0.549             4158366              95.7
-## 12 Master's degree    156737   3.61              4315103              99.3
-## 13 Doctorate           31546   0.726             4346649             100  
-## 
-## $immigration_stat
-## # A tibble: 3 x 5
-##   f                      n Percent `Cumulative Frequen~ `Cumulative Perce~
-##   &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;              &lt;dbl&gt;
-## 1 Immigrant         926718  21.3                 926718               21.3
-## 2 Non-permanent r~   30819   0.709               957537               22.0
-## 3 Non-immigrant    3389112  78.0                4346649              100  
-## 
-## $lo_inc_aftertax
-## # A tibble: 3 x 5
-##   f                      n Percent `Cumulative Frequen~ `Cumulative Perce~
-##   &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;              &lt;dbl&gt;
-## 1 non-low income   3688263   84.9               3688263               84.9
-## 2 low income        401292    9.23              4089555               94.1
-## 3 Concept not app~  257094    5.91              4346649              100  
-## 
-## $lo_inc_beforetax
-## # A tibble: 3 x 5
-##   f                      n Percent `Cumulative Frequen~ `Cumulative Perce~
-##   &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;              &lt;dbl&gt;
-## 1 non-low income   3539230   81.4               3539230               81.4
-## 2 low income        550325   12.7               4089555               94.1
-## 3 Concept not app~  257094    5.91              4346649              100  
-## 
-## $mar_stat
-## # A tibble: 5 x 5
-##   f                   n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;           &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Divorced       376637    8.66                 376637                 8.66
-## 2 Married       2304941   53.0                 2681578                61.7 
-## 3 Separated      140009    3.22                2821587                64.9 
-## 4 Never married 1264326   29.1                 4085913                94.0 
-## 5 Widowed        260736    6.00                4346649               100   
-## 
-## $occupation
-## # A tibble: 11 x 5
-##    f                     n Percent `Cumulative Frequen~ `Cumulative Perce~
-##    &lt;fct&gt;             &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;              &lt;dbl&gt;
-##  1 Management       323255    7.44               323255               7.44
-##  2 Business         583105   13.4                906360              20.9 
-##  3 Science          208323    4.79              1114683              25.6 
-##  4 Health           183469    4.22              1298152              29.9 
-##  5 Govt &amp; Religion  292291    6.72              1590443              36.6 
-##  6 Art &amp; Culture     93865    2.16              1684308              38.7 
-##  7 Sales &amp; Service  674923   15.5               2359231              54.3 
-##  8 Trades &amp; Trans~  484695   11.2               2843926              65.4 
-##  9 Primary indust~  129470    2.98              2973396              68.4 
-## 10 Manufacturing    177256    4.08              3150652              72.5 
-## 11 Not Applicable  1195997   27.5               4346649             100   
-## 
-## $official_lang
-## # A tibble: 4 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 English        2941427   67.7                2941427                67.7
-## 2 French          538988   12.4                3480415                80.1
-## 3 English &amp; Fre~  800365   18.4                4280780                98.5
-## 4 Other            65869    1.52               4346649               100. 
-## 
-## $place_of_birth
-## # A tibble: 3 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 Home province  2751371    63.3               2751371                63.3
-## 2 Other province  628030    14.4               3379401                77.7
-## 3 Outside Canada  967248    22.3               4346649               100  
-## 
-## $sex
-## # A tibble: 2 x 5
-##   f            n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;    &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Female 2242681    51.6                2242681                 51.6
-## 2 Male   2103968    48.4                4346649                100  
-## 
-## $transport
-## # A tibble: 9 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 Bicycle          34551  0.795                  34551               0.795
-## 2 Driver         2108055 48.5                  2142606              49.3  
-## 3 Motorbike         3498  0.0805               2146104              49.4  
-## 4 Other            33884  0.780                2179988              50.2  
-## 5 Passenger       195173  4.49                 2375161              54.6  
-## 6 Taxi              6464  0.149                2381625              54.8  
-## 7 Public Transp~  291932  6.72                 2673557              61.5  
-## 8 Walk            197232  4.54                 2870789              66.0  
-## 9 Not applicable 1475860 34.0                  4346649             100    
-## 
-## $repairs
-## # A tibble: 4 x 5
-##   f                    n Percent `Cumulative Frequenc~ `Cumulative Percen~
-##   &lt;fct&gt;            &lt;int&gt;   &lt;dbl&gt;                 &lt;int&gt;               &lt;dbl&gt;
-## 1 No             2749831   63.3                2749831                63.3
-## 2 Minor          1163257   26.8                3913088                90.0
-## 3 Major           343594    7.90               4256682                97.9
-## 4 Not applicable   89967    2.07               4346649               100. 
-## 
-## $province
-## # A tibble: 13 x 5
-##    f                      n Percent `Cumulative Freque~ `Cumulative Perce~
-##    &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-##  1 Newfoundland an~   74281   1.71                74281               1.71
-##  2 Prince Edward I~   18372   0.423               92653               2.13
-##  3 Nova Scotia       128755   2.96               221408               5.09
-##  4 New Brunswick     105097   2.42               326505               7.51
-##  5 Quebec           1047824  24.1               1374329              31.6 
-##  6 Ontario          1604077  36.9               2978406              68.5 
-##  7 Manitoba          176994   4.07              3155400              72.6 
-##  8 Saskatchewan      150432   3.46              3305832              76.1 
-##  9 Alberta           444249  10.2               3750081              86.3 
-## 10 British Columbia  557466  12.8               4307547              99.1 
-## 11 Yukon               9239   0.213             4316786              99.3 
-## 12 Northwest Terri~   15454   0.356             4332240              99.7 
-## 13 Nunavut            14409   0.331             4346649             100   
-## 
-## $rur_urb
-## # A tibble: 2 x 5
-##   f           n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Rural  984994    22.7                 984994                 22.7
-## 2 Urban 3361655    77.3                4346649                100  
-## 
-## $loinc_decile
-## # A tibble: 10 x 5
-##    f                 n Percent `Cumulative Frequency` `Cumulative Percent`
-##    &lt;fct&gt;         &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-##  1 1 - lowest   181990    4.19                 181990                 4.19
-##  2 2            396994    9.13                 578984                13.3 
-##  3 3            428154    9.85                1007138                23.2 
-##  4 4            439574   10.1                 1446712                33.3 
-##  5 5            449077   10.3                 1895789                43.6 
-##  6 6            457898   10.5                 2353687                54.1 
-##  7 7            470822   10.8                 2824509                65.0 
-##  8 8            486826   11.2                 3311335                76.2 
-##  9 9            508182   11.7                 3819517                87.9 
-## 10 10 - highest 527132   12.1                 4346649               100   
-## 
-## $dead
-## # A tibble: 2 x 5
-##   f              n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;      &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 Dead      339237    7.80                 339237                 7.80
-## 2 Not Dead 4007412   92.2                 4346649               100   
-## 
-## $no_fam_members
-## # A tibble: 10 x 5
-##    f                n Percent `Cumulative Frequency` `Cumulative Percent`
-##    &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-##  1 1           809041  18.6                   809041                 18.6
-##  2 2          1422921  32.7                  2231962                 51.3
-##  3 3           777323  17.9                  3009285                 69.2
-##  4 4           798371  18.4                  3807656                 87.6
-##  5 5           343506   7.90                 4151162                 95.5
-##  6 6           111760   2.57                 4262922                 98.1
-##  7 7            41760   0.961                4304682                 99.0
-##  8 8            19233   0.442                4323915                 99.5
-##  9 9            10451   0.240                4334366                 99.7
-## 10 10 or more   12283   0.283                4346649                100  
-## 
-## $age_imm
-## # A tibble: 15 x 5
-##    f                      n Percent `Cumulative Freque~ `Cumulative Perce~
-##    &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-##  1 &lt;5                 70377   1.62                70377               1.62
-##  2 5 to &lt;10           71202   1.64               141579               3.26
-##  3 10 to &lt;15          68871   1.58               210450               4.84
-##  4 15 to &lt;20          90577   2.08               301027               6.93
-##  5 20 to &lt;25         147812   3.40               448839              10.3 
-##  6 25 to &lt;30         153378   3.53               602217              13.9 
-##  7 30 to &lt;35         116607   2.68               718824              16.5 
-##  8 35 to &lt;40          78828   1.81               797652              18.4 
-##  9 40 to &lt;45          47966   1.10               845618              19.5 
-## 10 45 to &lt;50          27881   0.641              873499              20.1 
-## 11 50 to &lt;55          17481   0.402              890980              20.5 
-## 12 55 to &lt;60          14039   0.323              905019              20.8 
-## 13 60 and over        21699   0.499              926718              21.3 
-## 14 Non-permanent r~   30819   0.709              957537              22.0 
-## 15 Non-imigrant an~ 3389112  78.0               4346649             100   
-## 
-## $cause_death_1
-## # A tibble: 5 x 5
-##   f                     n Percent `Cumulative Frequen~ `Cumulative Percen~
-##   &lt;fct&gt;             &lt;int&gt;   &lt;dbl&gt;                &lt;int&gt;               &lt;dbl&gt;
-## 1 Communicable e~   15715  0.362                 15715               0.362
-## 2 Noncommunicable  298192  6.86                 313907               7.22 
-## 3 Injuries          21279  0.490                335186               7.71 
-## 4 Other causes o~    4051  0.0932               339237               7.80 
-## 5 Did not Die     4007412 92.2                 4346649             100    
-## 
-## $cause_death_2
-## # A tibble: 14 x 5
-##    f                      n Percent `Cumulative Freque~ `Cumulative Perce~
-##    &lt;fct&gt;              &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-##  1 Infectious dise~    7204   0.166                7204              0.166
-##  2 Respiratory inf~    7702   0.177               14906              0.343
-##  3 Colon and recta~   12781   0.294               27687              0.637
-##  4 Breast cancers      7845   0.180               35532              0.817
-##  5 Diabetes            9770   0.225               45302              1.04 
-##  6 Dementia           19388   0.446               64690              1.49 
-##  7 IHD                50068   1.15               114758              2.64 
-##  8 CVD                18107   0.417              132865              3.06 
-##  9 Respiratory dis~   21744   0.500              154609              3.56 
-## 10 Digestive disea~   14258   0.328              168867              3.88 
-## 11 Genitourinary d~    6800   0.156              175667              4.04 
-## 12 Unintentional i~   14587   0.336              190254              4.38 
-## 13 Other causes or~  148983   3.43               339237              7.80 
-## 14 Did not Die      4007412  92.2               4346649            100    
-## 
-## $birth_country
-## # A tibble: 10 x 5
-##    f                        n Percent `Cumulative Frequ~ `Cumulative Perc~
-##    &lt;fct&gt;                &lt;int&gt;   &lt;dbl&gt;              &lt;int&gt;             &lt;dbl&gt;
-##  1 non-Immigrant      3389112 78.0               3389112              78.0
-##  2 Latin America &amp; C~  165770  3.81              3554882              81.8
-##  3 Western Europe      164964  3.80              3719846              85.6
-##  4 Eastern Europe      140556  3.23              3860402              88.8
-##  5 Sub-Saharan Africa   80177  1.84              3940579              90.7
-##  6 N Africa, SW Asia~  118205  2.72              4058784              93.4
-##  7 S Asia                8652  0.199             4067436              93.6
-##  8 SE Asia               3320  0.0764            4070756              93.7
-##  9 E Asia                3892  0.0895            4074648              93.7
-## 10 Australia, NZ, Oc~  272001  6.26              4346649             100  
-## 
-## $no_kids
-## # A tibble: 3 x 5
-##   f               n Percent `Cumulative Frequency` `Cumulative Percent`
-##   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-## 1 None      2195893   50.5                 2195893                 50.5
-## 2 1 or 2    1752253   40.3                 3948146                 90.8
-## 3 3 or more  398503    9.17                4346649                100  
-## 
-## $year_imm
-## # A tibble: 6 x 5
-##   f                       n Percent `Cumulative Freque~ `Cumulative Perce~
-##   &lt;fct&gt;               &lt;int&gt;   &lt;dbl&gt;               &lt;int&gt;              &lt;dbl&gt;
-## 1 2002 or later       92354   2.12                92354               2.12
-## 2 1997-2001          103079   2.37               195433               4.50
-## 3 1987-1996          217124   5.00               412557               9.49
-## 4 1986 or earlier    515272  11.9                927829              21.3 
-## 5 Non-permanent re~   29750   0.684              957579              22.0 
-## 6 Non-immigrant an~ 3389070  78.0               4346649             100   
-## 
-## $age_grp
-## # A tibble: 15 x 5
-##    f            n Percent `Cumulative Frequency` `Cumulative Percent`
-##    &lt;fct&gt;    &lt;int&gt;   &lt;dbl&gt;                  &lt;int&gt;                &lt;dbl&gt;
-##  1 19-24   370193   8.52                  370193                 8.52
-##  2 25-29   357121   8.22                  727314                16.7 
-##  3 30-34   370583   8.53                 1097897                25.3 
-##  4 35-39   406491   9.35                 1504388                34.6 
-##  5 40-44   479630  11.0                  1984018                45.6 
-##  6 45-49   485782  11.2                  2469800                56.8 
-##  7 50-54   437395  10.1                  2907195                66.9 
-##  8 55-59   388211   8.93                 3295406                75.8 
-##  9 60-64   295752   6.80                 3591158                82.6 
-## 10 65-69   227771   5.24                 3818929                87.9 
-## 11 70-74   192595   4.43                 4011524                92.3 
-## 12 75-79   156532   3.60                 4168056                95.9 
-## 13 80-84   106865   2.46                 4274921                98.3 
-## 14 85-89    51146   1.18                 4326067                99.5 
-## 15 90 plus  20582   0.474                4346649               100</code></pre>
+map(clean_data, count_sum) %&gt;% kable</code></pre>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aboriginal ID</td>
+<td align="right">245694</td>
+<td align="right">5.65</td>
+<td align="right">245694</td>
+<td align="right">5.65</td>
+</tr>
+<tr class="even">
+<td align="left">Non-Aboriginal ID</td>
+<td align="right">4100955</td>
+<td align="right">94.35</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North_Am_Indian</td>
+<td align="right">167424</td>
+<td align="right">3.852</td>
+<td align="right">167424</td>
+<td align="right">3.85</td>
+</tr>
+<tr class="even">
+<td align="left">Mètis</td>
+<td align="right">54164</td>
+<td align="right">1.246</td>
+<td align="right">221588</td>
+<td align="right">5.10</td>
+</tr>
+<tr class="odd">
+<td align="left">Inuit</td>
+<td align="right">18804</td>
+<td align="right">0.433</td>
+<td align="right">240392</td>
+<td align="right">5.53</td>
+</tr>
+<tr class="even">
+<td align="left">Multiple Aborginal ID</td>
+<td align="right">881</td>
+<td align="right">0.020</td>
+<td align="right">241273</td>
+<td align="right">5.55</td>
+</tr>
+<tr class="odd">
+<td align="left">Other Aboriginal</td>
+<td align="right">4421</td>
+<td align="right">0.102</td>
+<td align="right">245694</td>
+<td align="right">5.65</td>
+</tr>
+<tr class="even">
+<td align="left">Non-Aboriginal</td>
+<td align="right">4100955</td>
+<td align="right">94.348</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">3610703</td>
+<td align="right">83.07</td>
+<td align="right">3610703</td>
+<td align="right">83.1</td>
+</tr>
+<tr class="even">
+<td align="left">Not stated</td>
+<td align="right">54059</td>
+<td align="right">1.24</td>
+<td align="right">3664762</td>
+<td align="right">84.3</td>
+</tr>
+<tr class="odd">
+<td align="left">Often</td>
+<td align="right">282002</td>
+<td align="right">6.49</td>
+<td align="right">3946764</td>
+<td align="right">90.8</td>
+</tr>
+<tr class="even">
+<td align="left">Sometimes</td>
+<td align="right">399885</td>
+<td align="right">9.20</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Canadian</td>
+<td align="right">4119958</td>
+<td align="right">94.78</td>
+<td align="right">4119958</td>
+<td align="right">94.8</td>
+</tr>
+<tr class="even">
+<td align="left">non-Canadian</td>
+<td align="right">226691</td>
+<td align="right">5.21</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Unpaid family workers</td>
+<td align="right">9209</td>
+<td align="right">0.212</td>
+<td align="right">9209</td>
+<td align="right">0.212</td>
+</tr>
+<tr class="even">
+<td align="left">Paid worker,no help</td>
+<td align="right">60121</td>
+<td align="right">1.383</td>
+<td align="right">69330</td>
+<td align="right">1.595</td>
+</tr>
+<tr class="odd">
+<td align="left">Paid worker,paid help</td>
+<td align="right">81310</td>
+<td align="right">1.871</td>
+<td align="right">150640</td>
+<td align="right">3.466</td>
+</tr>
+<tr class="even">
+<td align="left">Paid Worker</td>
+<td align="right">2748532</td>
+<td align="right">63.233</td>
+<td align="right">2899172</td>
+<td align="right">66.699</td>
+</tr>
+<tr class="odd">
+<td align="left">Self-employed,no help</td>
+<td align="right">179326</td>
+<td align="right">4.126</td>
+<td align="right">3078498</td>
+<td align="right">70.825</td>
+</tr>
+<tr class="even">
+<td align="left">Self-employed,paid help</td>
+<td align="right">72154</td>
+<td align="right">1.660</td>
+<td align="right">3150652</td>
+<td align="right">72.485</td>
+</tr>
+<tr class="odd">
+<td align="left">Not applicable</td>
+<td align="right">1195997</td>
+<td align="right">27.515</td>
+<td align="right">4346649</td>
+<td align="right">100.000</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">3359763</td>
+<td align="right">77.30</td>
+<td align="right">3359763</td>
+<td align="right">77.3</td>
+</tr>
+<tr class="even">
+<td align="left">Not stated</td>
+<td align="right">45969</td>
+<td align="right">1.06</td>
+<td align="right">3405732</td>
+<td align="right">78.4</td>
+</tr>
+<tr class="odd">
+<td align="left">Often</td>
+<td align="right">423068</td>
+<td align="right">9.73</td>
+<td align="right">3828800</td>
+<td align="right">88.1</td>
+</tr>
+<tr class="even">
+<td align="left">Sometimes</td>
+<td align="right">517849</td>
+<td align="right">11.91</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ADL &amp; Home &amp; other</td>
+<td align="right">288726</td>
+<td align="right">6.642</td>
+<td align="right">288726</td>
+<td align="right">6.64</td>
+</tr>
+<tr class="even">
+<td align="left">ADL &amp; Home &amp; Work/School</td>
+<td align="right">17434</td>
+<td align="right">0.401</td>
+<td align="right">306160</td>
+<td align="right">7.04</td>
+</tr>
+<tr class="odd">
+<td align="left">ADL &amp; Home &amp; Work/School &amp; other</td>
+<td align="right">148517</td>
+<td align="right">3.417</td>
+<td align="right">454677</td>
+<td align="right">10.46</td>
+</tr>
+<tr class="even">
+<td align="left">ADL &amp; Work &amp; other</td>
+<td align="right">8205</td>
+<td align="right">0.189</td>
+<td align="right">462882</td>
+<td align="right">10.65</td>
+</tr>
+<tr class="odd">
+<td align="left">ADL &amp; Home</td>
+<td align="right">66522</td>
+<td align="right">1.530</td>
+<td align="right">529404</td>
+<td align="right">12.18</td>
+</tr>
+<tr class="even">
+<td align="left">ADL &amp; other</td>
+<td align="right">23564</td>
+<td align="right">0.542</td>
+<td align="right">552968</td>
+<td align="right">12.72</td>
+</tr>
+<tr class="odd">
+<td align="left">ADL &amp; Work/school</td>
+<td align="right">8188</td>
+<td align="right">0.188</td>
+<td align="right">561156</td>
+<td align="right">12.91</td>
+</tr>
+<tr class="even">
+<td align="left">ADL</td>
+<td align="right">120731</td>
+<td align="right">2.778</td>
+<td align="right">681887</td>
+<td align="right">15.69</td>
+</tr>
+<tr class="odd">
+<td align="left">None</td>
+<td align="right">3359763</td>
+<td align="right">77.295</td>
+<td align="right">4041650</td>
+<td align="right">92.98</td>
+</tr>
+<tr class="even">
+<td align="left">Home &amp; other</td>
+<td align="right">47982</td>
+<td align="right">1.104</td>
+<td align="right">4089632</td>
+<td align="right">94.09</td>
+</tr>
+<tr class="odd">
+<td align="left">Home &amp; Work/school</td>
+<td align="right">14612</td>
+<td align="right">0.336</td>
+<td align="right">4104244</td>
+<td align="right">94.42</td>
+</tr>
+<tr class="even">
+<td align="left">Home &amp; Work/school &amp; other</td>
+<td align="right">54428</td>
+<td align="right">1.252</td>
+<td align="right">4158672</td>
+<td align="right">95.67</td>
+</tr>
+<tr class="odd">
+<td align="left">Work/school &amp; other</td>
+<td align="right">30750</td>
+<td align="right">0.707</td>
+<td align="right">4189422</td>
+<td align="right">96.38</td>
+</tr>
+<tr class="even">
+<td align="left">Home</td>
+<td align="right">34692</td>
+<td align="right">0.798</td>
+<td align="right">4224114</td>
+<td align="right">97.18</td>
+</tr>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">36578</td>
+<td align="right">0.842</td>
+<td align="right">4260692</td>
+<td align="right">98.02</td>
+</tr>
+<tr class="even">
+<td align="left">Work/school</td>
+<td align="right">39988</td>
+<td align="right">0.920</td>
+<td align="right">4300680</td>
+<td align="right">98.94</td>
+</tr>
+<tr class="odd">
+<td align="left">Not stated</td>
+<td align="right">45969</td>
+<td align="right">1.058</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Chinese</td>
+<td align="right">141501</td>
+<td align="right">3.255</td>
+<td align="right">141501</td>
+<td align="right">3.25</td>
+</tr>
+<tr class="even">
+<td align="left">South Asian</td>
+<td align="right">106406</td>
+<td align="right">2.448</td>
+<td align="right">247907</td>
+<td align="right">5.70</td>
+</tr>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="right">79628</td>
+<td align="right">1.832</td>
+<td align="right">327535</td>
+<td align="right">7.54</td>
+</tr>
+<tr class="even">
+<td align="left">Filipino</td>
+<td align="right">46079</td>
+<td align="right">1.060</td>
+<td align="right">373614</td>
+<td align="right">8.60</td>
+</tr>
+<tr class="odd">
+<td align="left">Latin American</td>
+<td align="right">36556</td>
+<td align="right">0.841</td>
+<td align="right">410170</td>
+<td align="right">9.44</td>
+</tr>
+<tr class="even">
+<td align="left">Southeast Asian</td>
+<td align="right">24144</td>
+<td align="right">0.555</td>
+<td align="right">434314</td>
+<td align="right">9.99</td>
+</tr>
+<tr class="odd">
+<td align="left">Arab</td>
+<td align="right">27776</td>
+<td align="right">0.639</td>
+<td align="right">462090</td>
+<td align="right">10.63</td>
+</tr>
+<tr class="even">
+<td align="left">West Asian</td>
+<td align="right">16355</td>
+<td align="right">0.376</td>
+<td align="right">478445</td>
+<td align="right">11.01</td>
+</tr>
+<tr class="odd">
+<td align="left">Korean</td>
+<td align="right">13813</td>
+<td align="right">0.318</td>
+<td align="right">492258</td>
+<td align="right">11.32</td>
+</tr>
+<tr class="even">
+<td align="left">Japanese</td>
+<td align="right">10427</td>
+<td align="right">0.240</td>
+<td align="right">502685</td>
+<td align="right">11.56</td>
+</tr>
+<tr class="odd">
+<td align="left">Other visible minority</td>
+<td align="right">8341</td>
+<td align="right">0.192</td>
+<td align="right">511026</td>
+<td align="right">11.76</td>
+</tr>
+<tr class="even">
+<td align="left">Multiple visible minority</td>
+<td align="right">12218</td>
+<td align="right">0.281</td>
+<td align="right">523244</td>
+<td align="right">12.04</td>
+</tr>
+<tr class="odd">
+<td align="left">Aboriginal self-reporting</td>
+<td align="right">241183</td>
+<td align="right">5.549</td>
+<td align="right">764427</td>
+<td align="right">17.59</td>
+</tr>
+<tr class="even">
+<td align="left">Not a visible minority</td>
+<td align="right">3582222</td>
+<td align="right">82.413</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">English</td>
+<td align="right">3209323</td>
+<td align="right">73.834</td>
+<td align="right">3209323</td>
+<td align="right">73.8</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="right">1032652</td>
+<td align="right">23.757</td>
+<td align="right">4241975</td>
+<td align="right">97.6</td>
+</tr>
+<tr class="odd">
+<td align="left">English &amp; French</td>
+<td align="right">40041</td>
+<td align="right">0.921</td>
+<td align="right">4282016</td>
+<td align="right">98.5</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">64633</td>
+<td align="right">1.487</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Full-time</td>
+<td align="right">2512562</td>
+<td align="right">57.8</td>
+<td align="right">2512562</td>
+<td align="right">57.8</td>
+</tr>
+<tr class="even">
+<td align="left">Part-time</td>
+<td align="right">562099</td>
+<td align="right">12.9</td>
+<td align="right">3074661</td>
+<td align="right">70.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Didn’t work</td>
+<td align="right">1271988</td>
+<td align="right">29.3</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1st Generation</td>
+<td align="right">967248</td>
+<td align="right">22.3</td>
+<td align="right">967248</td>
+<td align="right">22.3</td>
+</tr>
+<tr class="even">
+<td align="left">2nd Generation</td>
+<td align="right">667811</td>
+<td align="right">15.4</td>
+<td align="right">1635059</td>
+<td align="right">37.6</td>
+</tr>
+<tr class="odd">
+<td align="left">3rd Generation</td>
+<td align="right">2711590</td>
+<td align="right">62.4</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">None</td>
+<td align="right">902326</td>
+<td align="right">20.759</td>
+<td align="right">902326</td>
+<td align="right">20.8</td>
+</tr>
+<tr class="even">
+<td align="left">High School</td>
+<td align="right">1070588</td>
+<td align="right">24.630</td>
+<td align="right">1972914</td>
+<td align="right">45.4</td>
+</tr>
+<tr class="odd">
+<td align="left">Trades Cert/Dip</td>
+<td align="right">333219</td>
+<td align="right">7.666</td>
+<td align="right">2306133</td>
+<td align="right">53.1</td>
+</tr>
+<tr class="even">
+<td align="left">Apprenticeship Cert/Dip</td>
+<td align="right">183540</td>
+<td align="right">4.223</td>
+<td align="right">2489673</td>
+<td align="right">57.3</td>
+</tr>
+<tr class="odd">
+<td align="left">Non-Uni Cert/Dip &lt; 1 year</td>
+<td align="right">109752</td>
+<td align="right">2.525</td>
+<td align="right">2599425</td>
+<td align="right">59.8</td>
+</tr>
+<tr class="even">
+<td align="left">Non-Uni Cert/Dip 1-2 years</td>
+<td align="right">390160</td>
+<td align="right">8.976</td>
+<td align="right">2989585</td>
+<td align="right">68.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Non-Uni Cert/Dip &gt; 2years</td>
+<td align="right">316334</td>
+<td align="right">7.278</td>
+<td align="right">3305919</td>
+<td align="right">76.1</td>
+</tr>
+<tr class="even">
+<td align="left">Uni Cert/Dip below Bachelor’s</td>
+<td align="right">202175</td>
+<td align="right">4.651</td>
+<td align="right">3508094</td>
+<td align="right">80.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Bachelor’s degree</td>
+<td align="right">537064</td>
+<td align="right">12.356</td>
+<td align="right">4045158</td>
+<td align="right">93.1</td>
+</tr>
+<tr class="even">
+<td align="left">Uni Cert/Dip above Bachelor’s</td>
+<td align="right">89350</td>
+<td align="right">2.056</td>
+<td align="right">4134508</td>
+<td align="right">95.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Medicine etc.</td>
+<td align="right">23858</td>
+<td align="right">0.549</td>
+<td align="right">4158366</td>
+<td align="right">95.7</td>
+</tr>
+<tr class="even">
+<td align="left">Master’s degree</td>
+<td align="right">156737</td>
+<td align="right">3.606</td>
+<td align="right">4315103</td>
+<td align="right">99.3</td>
+</tr>
+<tr class="odd">
+<td align="left">Doctorate</td>
+<td align="right">31546</td>
+<td align="right">0.726</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Immigrant</td>
+<td align="right">926718</td>
+<td align="right">21.320</td>
+<td align="right">926718</td>
+<td align="right">21.3</td>
+</tr>
+<tr class="even">
+<td align="left">Non-permanent resident</td>
+<td align="right">30819</td>
+<td align="right">0.709</td>
+<td align="right">957537</td>
+<td align="right">22.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Non-immigrant</td>
+<td align="right">3389112</td>
+<td align="right">77.971</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">non-low income</td>
+<td align="right">3688263</td>
+<td align="right">84.85</td>
+<td align="right">3688263</td>
+<td align="right">84.9</td>
+</tr>
+<tr class="even">
+<td align="left">low income</td>
+<td align="right">401292</td>
+<td align="right">9.23</td>
+<td align="right">4089555</td>
+<td align="right">94.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Concept not applicable</td>
+<td align="right">257094</td>
+<td align="right">5.92</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">non-low income</td>
+<td align="right">3539230</td>
+<td align="right">81.42</td>
+<td align="right">3539230</td>
+<td align="right">81.4</td>
+</tr>
+<tr class="even">
+<td align="left">low income</td>
+<td align="right">550325</td>
+<td align="right">12.66</td>
+<td align="right">4089555</td>
+<td align="right">94.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Concept not applicable</td>
+<td align="right">257094</td>
+<td align="right">5.92</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Divorced</td>
+<td align="right">376637</td>
+<td align="right">8.66</td>
+<td align="right">376637</td>
+<td align="right">8.66</td>
+</tr>
+<tr class="even">
+<td align="left">Married</td>
+<td align="right">2304941</td>
+<td align="right">53.03</td>
+<td align="right">2681578</td>
+<td align="right">61.69</td>
+</tr>
+<tr class="odd">
+<td align="left">Separated</td>
+<td align="right">140009</td>
+<td align="right">3.22</td>
+<td align="right">2821587</td>
+<td align="right">64.91</td>
+</tr>
+<tr class="even">
+<td align="left">Never married</td>
+<td align="right">1264326</td>
+<td align="right">29.09</td>
+<td align="right">4085913</td>
+<td align="right">94.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Widowed</td>
+<td align="right">260736</td>
+<td align="right">6.00</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Management</td>
+<td align="right">323255</td>
+<td align="right">7.44</td>
+<td align="right">323255</td>
+<td align="right">7.44</td>
+</tr>
+<tr class="even">
+<td align="left">Business</td>
+<td align="right">583105</td>
+<td align="right">13.41</td>
+<td align="right">906360</td>
+<td align="right">20.85</td>
+</tr>
+<tr class="odd">
+<td align="left">Science</td>
+<td align="right">208323</td>
+<td align="right">4.79</td>
+<td align="right">1114683</td>
+<td align="right">25.64</td>
+</tr>
+<tr class="even">
+<td align="left">Health</td>
+<td align="right">183469</td>
+<td align="right">4.22</td>
+<td align="right">1298152</td>
+<td align="right">29.87</td>
+</tr>
+<tr class="odd">
+<td align="left">Govt &amp; Religion</td>
+<td align="right">292291</td>
+<td align="right">6.72</td>
+<td align="right">1590443</td>
+<td align="right">36.59</td>
+</tr>
+<tr class="even">
+<td align="left">Art &amp; Culture</td>
+<td align="right">93865</td>
+<td align="right">2.16</td>
+<td align="right">1684308</td>
+<td align="right">38.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Sales &amp; Service</td>
+<td align="right">674923</td>
+<td align="right">15.53</td>
+<td align="right">2359231</td>
+<td align="right">54.28</td>
+</tr>
+<tr class="even">
+<td align="left">Trades &amp; Transport</td>
+<td align="right">484695</td>
+<td align="right">11.15</td>
+<td align="right">2843926</td>
+<td align="right">65.43</td>
+</tr>
+<tr class="odd">
+<td align="left">Primary industry</td>
+<td align="right">129470</td>
+<td align="right">2.98</td>
+<td align="right">2973396</td>
+<td align="right">68.41</td>
+</tr>
+<tr class="even">
+<td align="left">Manufacturing</td>
+<td align="right">177256</td>
+<td align="right">4.08</td>
+<td align="right">3150652</td>
+<td align="right">72.48</td>
+</tr>
+<tr class="odd">
+<td align="left">Not Applicable</td>
+<td align="right">1195997</td>
+<td align="right">27.52</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">English</td>
+<td align="right">2941427</td>
+<td align="right">67.67</td>
+<td align="right">2941427</td>
+<td align="right">67.7</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="right">538988</td>
+<td align="right">12.40</td>
+<td align="right">3480415</td>
+<td align="right">80.1</td>
+</tr>
+<tr class="odd">
+<td align="left">English &amp; French</td>
+<td align="right">800365</td>
+<td align="right">18.41</td>
+<td align="right">4280780</td>
+<td align="right">98.5</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">65869</td>
+<td align="right">1.51</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Home province</td>
+<td align="right">2751371</td>
+<td align="right">63.3</td>
+<td align="right">2751371</td>
+<td align="right">63.3</td>
+</tr>
+<tr class="even">
+<td align="left">Other province</td>
+<td align="right">628030</td>
+<td align="right">14.4</td>
+<td align="right">3379401</td>
+<td align="right">77.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Outside Canada</td>
+<td align="right">967248</td>
+<td align="right">22.3</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="right">2242681</td>
+<td align="right">51.6</td>
+<td align="right">2242681</td>
+<td align="right">51.6</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="right">2103968</td>
+<td align="right">48.4</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bicycle</td>
+<td align="right">34551</td>
+<td align="right">0.795</td>
+<td align="right">34551</td>
+<td align="right">0.795</td>
+</tr>
+<tr class="even">
+<td align="left">Driver</td>
+<td align="right">2108055</td>
+<td align="right">48.498</td>
+<td align="right">2142606</td>
+<td align="right">49.293</td>
+</tr>
+<tr class="odd">
+<td align="left">Motorbike</td>
+<td align="right">3498</td>
+<td align="right">0.080</td>
+<td align="right">2146104</td>
+<td align="right">49.374</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">33884</td>
+<td align="right">0.780</td>
+<td align="right">2179988</td>
+<td align="right">50.153</td>
+</tr>
+<tr class="odd">
+<td align="left">Passenger</td>
+<td align="right">195173</td>
+<td align="right">4.490</td>
+<td align="right">2375161</td>
+<td align="right">54.643</td>
+</tr>
+<tr class="even">
+<td align="left">Taxi</td>
+<td align="right">6464</td>
+<td align="right">0.149</td>
+<td align="right">2381625</td>
+<td align="right">54.792</td>
+</tr>
+<tr class="odd">
+<td align="left">Public Transport</td>
+<td align="right">291932</td>
+<td align="right">6.716</td>
+<td align="right">2673557</td>
+<td align="right">61.508</td>
+</tr>
+<tr class="even">
+<td align="left">Walk</td>
+<td align="right">197232</td>
+<td align="right">4.538</td>
+<td align="right">2870789</td>
+<td align="right">66.046</td>
+</tr>
+<tr class="odd">
+<td align="left">Not applicable</td>
+<td align="right">1475860</td>
+<td align="right">33.954</td>
+<td align="right">4346649</td>
+<td align="right">100.000</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">2749831</td>
+<td align="right">63.26</td>
+<td align="right">2749831</td>
+<td align="right">63.3</td>
+</tr>
+<tr class="even">
+<td align="left">Minor</td>
+<td align="right">1163257</td>
+<td align="right">26.76</td>
+<td align="right">3913088</td>
+<td align="right">90.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Major</td>
+<td align="right">343594</td>
+<td align="right">7.91</td>
+<td align="right">4256682</td>
+<td align="right">97.9</td>
+</tr>
+<tr class="even">
+<td align="left">Not applicable</td>
+<td align="right">89967</td>
+<td align="right">2.07</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Newfoundland and Labrador</td>
+<td align="right">74281</td>
+<td align="right">1.709</td>
+<td align="right">74281</td>
+<td align="right">1.71</td>
+</tr>
+<tr class="even">
+<td align="left">Prince Edward Island</td>
+<td align="right">18372</td>
+<td align="right">0.423</td>
+<td align="right">92653</td>
+<td align="right">2.13</td>
+</tr>
+<tr class="odd">
+<td align="left">Nova Scotia</td>
+<td align="right">128755</td>
+<td align="right">2.962</td>
+<td align="right">221408</td>
+<td align="right">5.09</td>
+</tr>
+<tr class="even">
+<td align="left">New Brunswick</td>
+<td align="right">105097</td>
+<td align="right">2.418</td>
+<td align="right">326505</td>
+<td align="right">7.51</td>
+</tr>
+<tr class="odd">
+<td align="left">Quebec</td>
+<td align="right">1047824</td>
+<td align="right">24.106</td>
+<td align="right">1374329</td>
+<td align="right">31.62</td>
+</tr>
+<tr class="even">
+<td align="left">Ontario</td>
+<td align="right">1604077</td>
+<td align="right">36.904</td>
+<td align="right">2978406</td>
+<td align="right">68.52</td>
+</tr>
+<tr class="odd">
+<td align="left">Manitoba</td>
+<td align="right">176994</td>
+<td align="right">4.072</td>
+<td align="right">3155400</td>
+<td align="right">72.59</td>
+</tr>
+<tr class="even">
+<td align="left">Saskatchewan</td>
+<td align="right">150432</td>
+<td align="right">3.461</td>
+<td align="right">3305832</td>
+<td align="right">76.06</td>
+</tr>
+<tr class="odd">
+<td align="left">Alberta</td>
+<td align="right">444249</td>
+<td align="right">10.220</td>
+<td align="right">3750081</td>
+<td align="right">86.28</td>
+</tr>
+<tr class="even">
+<td align="left">British Columbia</td>
+<td align="right">557466</td>
+<td align="right">12.825</td>
+<td align="right">4307547</td>
+<td align="right">99.10</td>
+</tr>
+<tr class="odd">
+<td align="left">Yukon</td>
+<td align="right">9239</td>
+<td align="right">0.213</td>
+<td align="right">4316786</td>
+<td align="right">99.31</td>
+</tr>
+<tr class="even">
+<td align="left">Northwest Territories</td>
+<td align="right">15454</td>
+<td align="right">0.356</td>
+<td align="right">4332240</td>
+<td align="right">99.67</td>
+</tr>
+<tr class="odd">
+<td align="left">Nunavut</td>
+<td align="right">14409</td>
+<td align="right">0.331</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Rural</td>
+<td align="right">984994</td>
+<td align="right">22.7</td>
+<td align="right">984994</td>
+<td align="right">22.7</td>
+</tr>
+<tr class="even">
+<td align="left">Urban</td>
+<td align="right">3361655</td>
+<td align="right">77.3</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1 - lowest</td>
+<td align="right">181990</td>
+<td align="right">4.19</td>
+<td align="right">181990</td>
+<td align="right">4.19</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">396994</td>
+<td align="right">9.13</td>
+<td align="right">578984</td>
+<td align="right">13.32</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">428154</td>
+<td align="right">9.85</td>
+<td align="right">1007138</td>
+<td align="right">23.17</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">439574</td>
+<td align="right">10.11</td>
+<td align="right">1446712</td>
+<td align="right">33.28</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">449077</td>
+<td align="right">10.33</td>
+<td align="right">1895789</td>
+<td align="right">43.62</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">457898</td>
+<td align="right">10.54</td>
+<td align="right">2353687</td>
+<td align="right">54.15</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">470822</td>
+<td align="right">10.83</td>
+<td align="right">2824509</td>
+<td align="right">64.98</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="right">486826</td>
+<td align="right">11.20</td>
+<td align="right">3311335</td>
+<td align="right">76.18</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">508182</td>
+<td align="right">11.69</td>
+<td align="right">3819517</td>
+<td align="right">87.87</td>
+</tr>
+<tr class="even">
+<td align="left">10 - highest</td>
+<td align="right">527132</td>
+<td align="right">12.13</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Dead</td>
+<td align="right">339237</td>
+<td align="right">7.8</td>
+<td align="right">339237</td>
+<td align="right">7.8</td>
+</tr>
+<tr class="even">
+<td align="left">Not Dead</td>
+<td align="right">4007412</td>
+<td align="right">92.2</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">809041</td>
+<td align="right">18.613</td>
+<td align="right">809041</td>
+<td align="right">18.6</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">1422921</td>
+<td align="right">32.736</td>
+<td align="right">2231962</td>
+<td align="right">51.3</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">777323</td>
+<td align="right">17.883</td>
+<td align="right">3009285</td>
+<td align="right">69.2</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">798371</td>
+<td align="right">18.368</td>
+<td align="right">3807656</td>
+<td align="right">87.6</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">343506</td>
+<td align="right">7.903</td>
+<td align="right">4151162</td>
+<td align="right">95.5</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">111760</td>
+<td align="right">2.571</td>
+<td align="right">4262922</td>
+<td align="right">98.1</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">41760</td>
+<td align="right">0.961</td>
+<td align="right">4304682</td>
+<td align="right">99.0</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="right">19233</td>
+<td align="right">0.442</td>
+<td align="right">4323915</td>
+<td align="right">99.5</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">10451</td>
+<td align="right">0.240</td>
+<td align="right">4334366</td>
+<td align="right">99.7</td>
+</tr>
+<tr class="even">
+<td align="left">10 or more</td>
+<td align="right">12283</td>
+<td align="right">0.283</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">&lt;5</td>
+<td align="right">70377</td>
+<td align="right">1.619</td>
+<td align="right">70377</td>
+<td align="right">1.62</td>
+</tr>
+<tr class="even">
+<td align="left">5 to &lt;10</td>
+<td align="right">71202</td>
+<td align="right">1.638</td>
+<td align="right">141579</td>
+<td align="right">3.26</td>
+</tr>
+<tr class="odd">
+<td align="left">10 to &lt;15</td>
+<td align="right">68871</td>
+<td align="right">1.584</td>
+<td align="right">210450</td>
+<td align="right">4.84</td>
+</tr>
+<tr class="even">
+<td align="left">15 to &lt;20</td>
+<td align="right">90577</td>
+<td align="right">2.084</td>
+<td align="right">301027</td>
+<td align="right">6.92</td>
+</tr>
+<tr class="odd">
+<td align="left">20 to &lt;25</td>
+<td align="right">147812</td>
+<td align="right">3.401</td>
+<td align="right">448839</td>
+<td align="right">10.33</td>
+</tr>
+<tr class="even">
+<td align="left">25 to &lt;30</td>
+<td align="right">153378</td>
+<td align="right">3.529</td>
+<td align="right">602217</td>
+<td align="right">13.86</td>
+</tr>
+<tr class="odd">
+<td align="left">30 to &lt;35</td>
+<td align="right">116607</td>
+<td align="right">2.683</td>
+<td align="right">718824</td>
+<td align="right">16.54</td>
+</tr>
+<tr class="even">
+<td align="left">35 to &lt;40</td>
+<td align="right">78828</td>
+<td align="right">1.814</td>
+<td align="right">797652</td>
+<td align="right">18.35</td>
+</tr>
+<tr class="odd">
+<td align="left">40 to &lt;45</td>
+<td align="right">47966</td>
+<td align="right">1.104</td>
+<td align="right">845618</td>
+<td align="right">19.45</td>
+</tr>
+<tr class="even">
+<td align="left">45 to &lt;50</td>
+<td align="right">27881</td>
+<td align="right">0.641</td>
+<td align="right">873499</td>
+<td align="right">20.10</td>
+</tr>
+<tr class="odd">
+<td align="left">50 to &lt;55</td>
+<td align="right">17481</td>
+<td align="right">0.402</td>
+<td align="right">890980</td>
+<td align="right">20.50</td>
+</tr>
+<tr class="even">
+<td align="left">55 to &lt;60</td>
+<td align="right">14039</td>
+<td align="right">0.323</td>
+<td align="right">905019</td>
+<td align="right">20.82</td>
+</tr>
+<tr class="odd">
+<td align="left">60 and over</td>
+<td align="right">21699</td>
+<td align="right">0.499</td>
+<td align="right">926718</td>
+<td align="right">21.32</td>
+</tr>
+<tr class="even">
+<td align="left">Non-permanent resident</td>
+<td align="right">30819</td>
+<td align="right">0.709</td>
+<td align="right">957537</td>
+<td align="right">22.03</td>
+</tr>
+<tr class="odd">
+<td align="left">Non-imigrant and others</td>
+<td align="right">3389112</td>
+<td align="right">77.971</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Communicable etc.</td>
+<td align="right">15715</td>
+<td align="right">0.362</td>
+<td align="right">15715</td>
+<td align="right">0.362</td>
+</tr>
+<tr class="even">
+<td align="left">Noncommunicable</td>
+<td align="right">298192</td>
+<td align="right">6.860</td>
+<td align="right">313907</td>
+<td align="right">7.222</td>
+</tr>
+<tr class="odd">
+<td align="left">Injuries</td>
+<td align="right">21279</td>
+<td align="right">0.490</td>
+<td align="right">335186</td>
+<td align="right">7.711</td>
+</tr>
+<tr class="even">
+<td align="left">Other causes or NA</td>
+<td align="right">4051</td>
+<td align="right">0.093</td>
+<td align="right">339237</td>
+<td align="right">7.805</td>
+</tr>
+<tr class="odd">
+<td align="left">Did not Die</td>
+<td align="right">4007412</td>
+<td align="right">92.195</td>
+<td align="right">4346649</td>
+<td align="right">100.000</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Infectious diseases</td>
+<td align="right">7204</td>
+<td align="right">0.166</td>
+<td align="right">7204</td>
+<td align="right">0.166</td>
+</tr>
+<tr class="even">
+<td align="left">Respiratory infections</td>
+<td align="right">7702</td>
+<td align="right">0.177</td>
+<td align="right">14906</td>
+<td align="right">0.343</td>
+</tr>
+<tr class="odd">
+<td align="left">Colon and rectal cancers</td>
+<td align="right">12781</td>
+<td align="right">0.294</td>
+<td align="right">27687</td>
+<td align="right">0.637</td>
+</tr>
+<tr class="even">
+<td align="left">Breast cancers</td>
+<td align="right">7845</td>
+<td align="right">0.180</td>
+<td align="right">35532</td>
+<td align="right">0.817</td>
+</tr>
+<tr class="odd">
+<td align="left">Diabetes</td>
+<td align="right">9770</td>
+<td align="right">0.225</td>
+<td align="right">45302</td>
+<td align="right">1.042</td>
+</tr>
+<tr class="even">
+<td align="left">Dementia</td>
+<td align="right">19388</td>
+<td align="right">0.446</td>
+<td align="right">64690</td>
+<td align="right">1.488</td>
+</tr>
+<tr class="odd">
+<td align="left">IHD</td>
+<td align="right">50068</td>
+<td align="right">1.152</td>
+<td align="right">114758</td>
+<td align="right">2.640</td>
+</tr>
+<tr class="even">
+<td align="left">CVD</td>
+<td align="right">18107</td>
+<td align="right">0.417</td>
+<td align="right">132865</td>
+<td align="right">3.057</td>
+</tr>
+<tr class="odd">
+<td align="left">Respiratory diseases</td>
+<td align="right">21744</td>
+<td align="right">0.500</td>
+<td align="right">154609</td>
+<td align="right">3.557</td>
+</tr>
+<tr class="even">
+<td align="left">Digestive diseases</td>
+<td align="right">14258</td>
+<td align="right">0.328</td>
+<td align="right">168867</td>
+<td align="right">3.885</td>
+</tr>
+<tr class="odd">
+<td align="left">Genitourinary diseases</td>
+<td align="right">6800</td>
+<td align="right">0.156</td>
+<td align="right">175667</td>
+<td align="right">4.041</td>
+</tr>
+<tr class="even">
+<td align="left">Unintentional injuries</td>
+<td align="right">14587</td>
+<td align="right">0.336</td>
+<td align="right">190254</td>
+<td align="right">4.377</td>
+</tr>
+<tr class="odd">
+<td align="left">Other causes or NA</td>
+<td align="right">148983</td>
+<td align="right">3.428</td>
+<td align="right">339237</td>
+<td align="right">7.805</td>
+</tr>
+<tr class="even">
+<td align="left">Did not Die</td>
+<td align="right">4007412</td>
+<td align="right">92.195</td>
+<td align="right">4346649</td>
+<td align="right">100.000</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">non-Immigrant</td>
+<td align="right">3389112</td>
+<td align="right">77.971</td>
+<td align="right">3389112</td>
+<td align="right">78.0</td>
+</tr>
+<tr class="even">
+<td align="left">Latin America &amp; Caribbean</td>
+<td align="right">165770</td>
+<td align="right">3.814</td>
+<td align="right">3554882</td>
+<td align="right">81.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Western Europe</td>
+<td align="right">164964</td>
+<td align="right">3.795</td>
+<td align="right">3719846</td>
+<td align="right">85.6</td>
+</tr>
+<tr class="even">
+<td align="left">Eastern Europe</td>
+<td align="right">140556</td>
+<td align="right">3.234</td>
+<td align="right">3860402</td>
+<td align="right">88.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Sub-Saharan Africa</td>
+<td align="right">80177</td>
+<td align="right">1.845</td>
+<td align="right">3940579</td>
+<td align="right">90.7</td>
+</tr>
+<tr class="even">
+<td align="left">N Africa, SW Asia &amp; Middle East</td>
+<td align="right">118205</td>
+<td align="right">2.719</td>
+<td align="right">4058784</td>
+<td align="right">93.4</td>
+</tr>
+<tr class="odd">
+<td align="left">S Asia</td>
+<td align="right">8652</td>
+<td align="right">0.199</td>
+<td align="right">4067436</td>
+<td align="right">93.6</td>
+</tr>
+<tr class="even">
+<td align="left">SE Asia</td>
+<td align="right">3320</td>
+<td align="right">0.076</td>
+<td align="right">4070756</td>
+<td align="right">93.7</td>
+</tr>
+<tr class="odd">
+<td align="left">E Asia</td>
+<td align="right">3892</td>
+<td align="right">0.090</td>
+<td align="right">4074648</td>
+<td align="right">93.7</td>
+</tr>
+<tr class="even">
+<td align="left">Australia, NZ, Oceania &amp; Greenland</td>
+<td align="right">272001</td>
+<td align="right">6.258</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">None</td>
+<td align="right">2195893</td>
+<td align="right">50.52</td>
+<td align="right">2195893</td>
+<td align="right">50.5</td>
+</tr>
+<tr class="even">
+<td align="left">1 or 2</td>
+<td align="right">1752253</td>
+<td align="right">40.31</td>
+<td align="right">3948146</td>
+<td align="right">90.8</td>
+</tr>
+<tr class="odd">
+<td align="left">3 or more</td>
+<td align="right">398503</td>
+<td align="right">9.17</td>
+<td align="right">4346649</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2002 or later</td>
+<td align="right">92354</td>
+<td align="right">2.125</td>
+<td align="right">92354</td>
+<td align="right">2.12</td>
+</tr>
+<tr class="even">
+<td align="left">1997-2001</td>
+<td align="right">103079</td>
+<td align="right">2.371</td>
+<td align="right">195433</td>
+<td align="right">4.50</td>
+</tr>
+<tr class="odd">
+<td align="left">1987-1996</td>
+<td align="right">217124</td>
+<td align="right">4.995</td>
+<td align="right">412557</td>
+<td align="right">9.49</td>
+</tr>
+<tr class="even">
+<td align="left">1986 or earlier</td>
+<td align="right">515272</td>
+<td align="right">11.854</td>
+<td align="right">927829</td>
+<td align="right">21.35</td>
+</tr>
+<tr class="odd">
+<td align="left">Non-permanent resident</td>
+<td align="right">29750</td>
+<td align="right">0.684</td>
+<td align="right">957579</td>
+<td align="right">22.03</td>
+</tr>
+<tr class="even">
+<td align="left">Non-immigrant and others</td>
+<td align="right">3389070</td>
+<td align="right">77.970</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">f</th>
+<th align="right">n</th>
+<th align="right">Percent</th>
+<th align="right">Cumulative Frequency</th>
+<th align="right">Cumulative Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">19-24</td>
+<td align="right">370193</td>
+<td align="right">8.517</td>
+<td align="right">370193</td>
+<td align="right">8.52</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="right">357121</td>
+<td align="right">8.216</td>
+<td align="right">727314</td>
+<td align="right">16.73</td>
+</tr>
+<tr class="odd">
+<td align="left">30-34</td>
+<td align="right">370583</td>
+<td align="right">8.526</td>
+<td align="right">1097897</td>
+<td align="right">25.26</td>
+</tr>
+<tr class="even">
+<td align="left">35-39</td>
+<td align="right">406491</td>
+<td align="right">9.352</td>
+<td align="right">1504388</td>
+<td align="right">34.61</td>
+</tr>
+<tr class="odd">
+<td align="left">40-44</td>
+<td align="right">479630</td>
+<td align="right">11.034</td>
+<td align="right">1984018</td>
+<td align="right">45.65</td>
+</tr>
+<tr class="even">
+<td align="left">45-49</td>
+<td align="right">485782</td>
+<td align="right">11.176</td>
+<td align="right">2469800</td>
+<td align="right">56.82</td>
+</tr>
+<tr class="odd">
+<td align="left">50-54</td>
+<td align="right">437395</td>
+<td align="right">10.063</td>
+<td align="right">2907195</td>
+<td align="right">66.88</td>
+</tr>
+<tr class="even">
+<td align="left">55-59</td>
+<td align="right">388211</td>
+<td align="right">8.931</td>
+<td align="right">3295406</td>
+<td align="right">75.81</td>
+</tr>
+<tr class="odd">
+<td align="left">60-64</td>
+<td align="right">295752</td>
+<td align="right">6.804</td>
+<td align="right">3591158</td>
+<td align="right">82.62</td>
+</tr>
+<tr class="even">
+<td align="left">65-69</td>
+<td align="right">227771</td>
+<td align="right">5.240</td>
+<td align="right">3818929</td>
+<td align="right">87.86</td>
+</tr>
+<tr class="odd">
+<td align="left">70-74</td>
+<td align="right">192595</td>
+<td align="right">4.431</td>
+<td align="right">4011524</td>
+<td align="right">92.29</td>
+</tr>
+<tr class="even">
+<td align="left">75-79</td>
+<td align="right">156532</td>
+<td align="right">3.601</td>
+<td align="right">4168056</td>
+<td align="right">95.89</td>
+</tr>
+<tr class="odd">
+<td align="left">80-84</td>
+<td align="right">106865</td>
+<td align="right">2.459</td>
+<td align="right">4274921</td>
+<td align="right">98.35</td>
+</tr>
+<tr class="even">
+<td align="left">85-89</td>
+<td align="right">51146</td>
+<td align="right">1.177</td>
+<td align="right">4326067</td>
+<td align="right">99.53</td>
+</tr>
+<tr class="odd">
+<td align="left">90 plus</td>
+<td align="right">20582</td>
+<td align="right">0.474</td>
+<td align="right">4346649</td>
+<td align="right">100.00</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
