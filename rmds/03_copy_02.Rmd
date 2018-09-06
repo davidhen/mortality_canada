@@ -79,7 +79,7 @@ clean_data %>%
   group_by(age_imm) %>% 
   mutate(frq = round(n/sum(n),4),
          pct = frq*100)  -> ageimm_dead
-datatable(age_dead, extensions = "Buttons", options = list(
+datatable(ageimm_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
@@ -163,7 +163,7 @@ clean_data %>%
   group_by(education) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> edu_dead
-datatable(inc_dead, extensions = "Buttons", options = list(
+datatable(edu_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
@@ -192,7 +192,7 @@ clean_data %>%
   group_by(ab_id_detailed) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> ab_dead
-datatable(inc_dead, extensions = "Buttons", options = list(
+datatable(ab_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
@@ -280,7 +280,7 @@ clean_data %>%
   group_by(adl_difficulty) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> adl_dead
-datatable(prov_dead, extensions = "Buttons", options = list(
+datatable(adl_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
@@ -306,7 +306,7 @@ clean_data %>%
   group_by(birth_country, age_grp) %>% 
   mutate(frq = round(n/sum(n), 4),
          pct= frq*100)  -> birth_dead
-datatable(prov_dead, extensions = "Buttons", options = list(
+datatable(birth_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
