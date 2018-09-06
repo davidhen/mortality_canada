@@ -9,6 +9,6 @@ Code and materials for the Hackathon held in Banff, Canada at IPDLN 2018
 
 * [Data Cleaning](01_data-cleaning.html)
 * [Sumeet initial thoughts](02_SAS_PROC_FREQ.html)
-* [Count with R](03_copy_02.html)
+* [Socioeconomic predictors of mortality](03_copy_02.html)
 
 
