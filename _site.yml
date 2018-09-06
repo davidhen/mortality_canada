@@ -7,13 +7,15 @@ navbar:
       href: index.html
     - text: "License"
       href: license.html
+    - text: "davidhen.com"
+      href: "https://www.davidhen.com"
   right:
     - icon: fa-github
       href: https://github.com/davidhen/mortality_canada
     - icon: fa-twitter
       href: https://twitter.com/_davidhen
 output:
-  workflowr::wflow_html:
+ html_document:
     toc: true
     toc_float: true
     theme: spacelab
