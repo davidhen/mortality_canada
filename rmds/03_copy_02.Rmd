@@ -245,6 +245,7 @@ clean_data %>%
          frq_dead_total = Dead/total) %>% 
   select(-total) %>% 
   gather(type, frq, frq_dead_grp:frq_dead_total)  -> prov_dead
+prov_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -268,24 +269,20 @@ prov_dead %>%
 
 and a map
 
-```{r map_prov, fig.width=9, fig.height=6}
+```{r map_prov, fig.width=10, fig.height=6}
 prov_dead %<>%
   filter(type == "frq_dead_grp") %>% 
-  mutate(frq = round(frq * 100, 2))
-
-classes <- classIntervals(prov_dead$frq, n = 5, style = "equal")
-
-prov_dead %<>%
-  mutate(pct_class = cut(frq, classes$brks, include.lowest = TRUE))
+  mutate(frq = round(frq * 100,2))
 
 prov_dead %>% 
   left_join(., shapefile) %>% 
   ggplot(.) +
-  geom_sf(aes(fill = pct_class),
+  geom_sf(aes(fill = frq),
           colour = "black",
           size = 0.3) +
-  scale_fill_brewer(palette = "Blues", 
-                    name = "Mortality rate %") +
+  scale_fill_distiller(palette = "Blues", 
+                       name = "Mortality rate %",
+                       direction = 1) +
   theme(line = element_blank(),
         axis.text = element_blank(),
         panel.grid = element_line(colour = "transparent"),

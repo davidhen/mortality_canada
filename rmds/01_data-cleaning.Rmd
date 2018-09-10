@@ -33,7 +33,7 @@ I've also downloaded a shapefile of Canadian provinces from [this link](https://
 
 ```{r load_data}
 raw_data <- read_csv(here("raw_data/ipdln_synth_final.csv"))
-shapefile <- read_sf(here("raw_data/canada_province_shapefile/gpr_000b11a_e.shp"))
+shapefile <- read_sf(here("raw_data/wether_gov_shapefile/province.shp"))
 ```
 
 
@@ -362,7 +362,7 @@ Need to change one variable name and drop some unneeded variables
 
 ```{r shape_clean}
 shapefile %<>% 
-  rename(province = PRENAME) %>% 
+  rename(province = NAME) %>% 
   select(province, geometry)
 ```
 
@@ -385,5 +385,8 @@ save(shapefile, file = here("assets/clean_data/shapefile.rds"))
 ```
 
 
+#Session info
 
-
+```{r session_info, cache=FALSE}
+devtools::session_info()
+```
