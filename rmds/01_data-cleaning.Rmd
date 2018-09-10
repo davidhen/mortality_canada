@@ -350,6 +350,8 @@ rm(raw_data)
 
 ##Shapefile
 
+**also try https://www.weather.gov/gis/CanadianProvinces**
+
 Quick look at the shapefile to make sure everything is in order
 
 ```{r shape}

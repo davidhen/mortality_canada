@@ -49,26 +49,30 @@ load(here("assets/clean_data/shapefile.rds"))
 ```{r age_dead}
 clean_data %>% 
   count(age_grp, dead) %>% 
-  group_by(age_grp) %>% 
-  mutate(frq = round(n/sum(n),4),
-         pct = frq*100)  -> age_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total) -> age_dead
 datatable(age_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
 plot it
 
-```{r plot_age, fig.width=9}
+```{r plot_age, fig.width=12}
 age_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(age_grp, frq)) +
-  geom_col(fill = "#4477AA") +
-  coord_flip() +
+  ggplot(aes(age_grp, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
   scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom") +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Age group",
        x = "",
-       y = "")
+       y = "", 
+       fill = "")
 ```
 
 ##Age at immigration
@@ -76,27 +80,31 @@ age_dead %>%
 ```{r label, options}
 clean_data %>% 
   count(age_imm, dead) %>% 
-  group_by(age_imm) %>% 
-  mutate(frq = round(n/sum(n),4),
-         pct = frq*100)  -> ageimm_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total) -> ageimm_dead
 datatable(ageimm_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
 plot
 
-```{r plot-ageimm, fig.width=9}
+```{r plot-ageimm, fig.width=12}
 ageimm_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(age_imm, frq)) +
-  geom_col(fill = "#4477AA") +
-  coord_flip() +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.5)) +
+  ggplot(aes(age_imm, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom", 
+        axis.text.x = element_text(angle = 30, hjust = 1)) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Age group at immigration",
        x = "",
-       y = "")
+       y = "", 
+       fill = "")
 ```
 
 
@@ -105,9 +113,12 @@ ageimm_dead %>%
 ```{r sex-dead}
 clean_data %>% 
   count(sex, dead) %>% 
-  group_by(sex) %>% 
-  mutate(frq = round(n/sum(n),4),
-         pct = frq*100)  -> sex_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)  -> sex_dead
 datatable(sex_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -116,12 +127,11 @@ plot it
 
 ```{r plot_sex, fig.width=9}
 sex_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(sex, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.1),
-                     breaks = scales::pretty_breaks(n = 9)) +
+  ggplot(aes(sex, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom") +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Sex",
        x = "",
@@ -134,25 +144,28 @@ sex_dead %>%
 ```{r count}
 clean_data %>% 
   count(loinc_decile, dead) %>% 
-  group_by(loinc_decile) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> inc_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)  -> inc_dead
 datatable(inc_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
 ```{r plot_inc, fig.width=9}
 inc_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(loinc_decile, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.16),
-                     breaks = scales::pretty_breaks(n = 9)) +
+  ggplot(aes(loinc_decile, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom") +
   labs(title = "Percentage of indivudals who died",
-       subtitle = "by income decile",
+       subtitle = "by Income decile",
        x = "",
-       y = "")
+       y = "",
+       fill = "")
 ```
 
 ##Education
@@ -160,28 +173,31 @@ inc_dead %>%
 ```{r edu-dead}
 clean_data %>% 
   count(education, dead) %>% 
-  group_by(education) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> edu_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)  -> edu_dead
 datatable(edu_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
 plot it
 
-```{r plot-edu, fig.width = 9}
+```{r plot-edu, fig.width = 12}
 edu_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(education, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.18),
-                     breaks = scales::pretty_breaks(n = 9)) +
-  coord_flip() +
+  ggplot(aes(education, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 30, hjust = 1)) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by highest level of education obtained",
        x = "",
-       y = "")
+       y = "",
+       fill = "")
 ```
 
 ##Aboriginal identity
@@ -189,9 +205,12 @@ edu_dead %>%
 ```{r abor-count}
 clean_data %>% 
   count(ab_id_detailed, dead) %>% 
-  group_by(ab_id_detailed) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> ab_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)   -> ab_dead
 datatable(ab_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -199,19 +218,19 @@ datatable(ab_dead, extensions = "Buttons", options = list(
 
 plot it
 
-```{r ad-dead, fig.width=9}
+```{r ad-dead, fig.width=12}
 ab_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(ab_id_detailed, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.12),
-                     breaks = scales::pretty_breaks(n = 9)) +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  ggplot(aes(ab_id_detailed, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 30, hjust = 1)) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Aboriginal identity",
        x = "",
-       y = "")
+       y = "",
+       fill = "")
 ```
 
 
@@ -220,9 +239,12 @@ ab_dead %>%
 ```{r prov, options}
 clean_data %>% 
   count(province, dead) %>% 
-  group_by(province) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> prov_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)  -> prov_dead
 datatable(prov_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
@@ -231,29 +253,30 @@ plot it
 
 ```{r plot-prov, fig.width=9}
 prov_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(province, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.1),
-                     breaks = scales::pretty_breaks(n = 9)) +
-  coord_flip() +
+  ggplot(aes(province, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 10)) +
   labs(title = "Percentage of indivudals who died",
        subtitle = "by Province of residence",
        x = "",
-       y = "")
+       y = "",
+       fill = "")
 ```
 
 and a map
 
 ```{r map_prov, fig.width=9, fig.height=6}
 prov_dead %<>%
-  filter(dead == "Dead") 
+  filter(type == "frq_dead_grp") %>% 
+  mutate(frq = round(frq * 100, 2))
 
-classes <- classIntervals(prov_dead$pct, n = 5, style = "equal")
+classes <- classIntervals(prov_dead$frq, n = 5, style = "equal")
 
 prov_dead %<>%
-  mutate(pct_class = cut(pct, classes$brks, include.lowest = TRUE))
+  mutate(pct_class = cut(frq, classes$brks, include.lowest = TRUE))
 
 prov_dead %>% 
   left_join(., shapefile) %>% 
@@ -277,55 +300,58 @@ prov_dead %>%
 ```{r adl-dead}
 clean_data %>% 
   count(adl_difficulty, dead) %>% 
-  group_by(adl_difficulty) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> adl_dead
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total)  -> adl_dead
 datatable(adl_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
 ```{r plot-adl, fig.width=9}
 adl_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(adl_difficulty, frq)) +
-  geom_col(fill = "#4477AA") +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0, 0.35),
-                     breaks = scales::pretty_breaks(n = 9)) +
+  ggplot(aes(adl_difficulty, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom") +
   labs(title = "Percentage of indivudals who died",
-       subtitle = "by stated difficulty with Activities of Daily Living",
+       subtitle = "by reported difficulty with Activities of Daily Living",
        x = "",
-       y = "")
+       y = "",
+       fill = "")
 ```
 
 ##Country of birth
 
 ```{r birth}
 clean_data %>% 
-  count(birth_country, age_grp, dead) %>% 
-  group_by(birth_country, age_grp) %>% 
-  mutate(frq = round(n/sum(n), 4),
-         pct= frq*100)  -> birth_dead
+  count(birth_country, dead) %>% 
+  spread(dead, n) %>% 
+  mutate(total = sum(Dead) + sum(`Not Dead`),
+         frq_dead_grp = Dead / (Dead + `Not Dead`),
+         frq_dead_total = Dead/total) %>% 
+  select(-total) %>% 
+  gather(type, frq, frq_dead_grp:frq_dead_total) -> birth_dead
 datatable(birth_dead, extensions = "Buttons", options = list(
   dom = "Bfrtip"))
 ```
 
-```{r birth_2, fig.width=14, fig.height=10}
+```{r birth_2, fig.width=12}
 birth_dead %>% 
-  filter(dead == "Dead") %>% 
-  ggplot(aes(birth_country, frq, fill = birth_country)) +
-  geom_col() +
-  scale_fill_ptol() +
-  facet_wrap(~ age_grp) +
-  scale_y_continuous(labels = scales::percent_format(),
-                     breaks = scales::pretty_breaks()) +
+  ggplot(aes(birth_country, frq, fill = type)) +
+  geom_col(position = "dodge") +
+  scale_fill_ptol(labels = c("% of group who died", "% of total who died")) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 30, hjust = 1)) +
   labs(title = "Percentage of indivudals who died",
-       subtitle = "by age group and country of birth",
+       subtitle = "by reported difficulty with Activities of Daily Living",
        x = "",
-       y = "", 
-       fill = "Country of\nbirth") +
-  theme(legend.position = "bottom", 
-        axis.text.x = element_blank())
+       y = "",
+       fill = "")
 ```
 
 
